@@ -49,7 +49,7 @@
        padding:7px 16px;border-radius:999px;font-weight:600;font-size:14px;color:var(--ink-700)}
   .tag i{width:10px;height:10px;border-radius:50%;background:var(--brand-2);box-shadow:0 0 0 3px rgba(22,163,74,.15)}
   .tag.b i{background:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.15)}
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;height:clamp(380px,56vh,560px)}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;height:clamp(380px,56vh,560px)}
   a.card{
     display:flex;flex-direction:column;overflow:hidden;text-decoration:none;color:var(--ink-900);
     background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);
@@ -67,8 +67,9 @@
   .syrup .panel{background:linear-gradient(135deg,#f59e0b,#ea580c)}
   .oil   .panel{background:linear-gradient(135deg,#15803d,#22c55e)}
   .dc    .panel{background:linear-gradient(135deg,#1d4ed8,#38bdf8)}
+  .waste .panel{background:linear-gradient(135deg,#475569,#94a3b8)}
   .info{padding:24px 26px 26px;text-align:center}
-  .name{font-size:38px;font-weight:800;line-height:1.1}
+  .name{font-size:34px;font-weight:800;line-height:1.1}
   .desc{font-size:15px;color:var(--ink-500);font-weight:500;margin-top:6px}
   .cta{
     display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:12px 28px;border-radius:999px;
@@ -78,7 +79,18 @@
   .oil .cta{background:linear-gradient(135deg,#15803d,#22c55e)}
   .dc .cta{background:linear-gradient(135deg,#1d4ed8,#38bdf8)}
   a.card:hover .cta{gap:14px}
-  @media (max-width:900px){
+  div.card.soon{display:flex;flex-direction:column;overflow:hidden;background:var(--surface);border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-md);border:1px solid #e9ecf4;cursor:not-allowed;position:relative}
+  div.card.soon .panel{filter:grayscale(.35);opacity:.85}
+  div.card.soon .panel svg{width:120px;height:120px;position:relative;z-index:1;filter:drop-shadow(0 8px 14px rgba(0,0,0,.2))}
+  .ribbon{position:absolute;top:16px;right:16px;z-index:2;background:#fff;color:#b45309;font-weight:800;font-size:14px;
+    padding:5px 14px;border-radius:999px;box-shadow:0 4px 12px rgba(0,0,0,.18);border:1px solid #fde68a}
+  .waste .cta{background:#e2e8f0;color:#64748b}
+  @media (max-width:1100px){
+    .grid{grid-template-columns:repeat(2,1fr);height:auto}
+    .card{min-height:340px}
+  }
+  @media (max-width:700px){
     .grid{grid-template-columns:1fr;height:auto}
     a.card{min-height:320px}
     .header h1{font-size:19px}
@@ -136,11 +148,23 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V9l9-6 9 6v12"/><path d="M8 21v-8h8v8"/><path d="M8 15.5h8M8 18h8"/><path d="M2 21h20"/></svg>
         </div>
         <div class="info">
-          <div class="name">DC วังน้อย</div>
+          <div class="name">DC</div>
           <div class="desc">ศูนย์กระจายสินค้า</div>
           <span class="cta">เปิด Monitor <span>→</span></span>
         </div>
       </a>
+
+      <div class="card soon waste" aria-disabled="true">
+        <span class="ribbon">เร็วๆ นี้</span>
+        <div class="panel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/><path d="M10 11v5M14 11v5"/></svg>
+        </div>
+        <div class="info">
+          <div class="name">ขยะอุตสาหกรรม</div>
+          <div class="desc">อยู่ระหว่างเตรียมการ</div>
+          <span class="cta">เร็วๆ นี้</span>
+        </div>
+      </div>
     </div>
   </main>
 </body>
