@@ -2,167 +2,146 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>เลือกสายงานตรวจสภาพรถ</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ติดตามสถานะตรวจสภาพรถ & เป่าแอลกอฮอล์ | Non Oil</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#ffffff;
-    --board:#0b1220;
-    --board-2:#131b2c;
-    --ink:#0b1220;
-    --sub:#667085;
-    --sub-soft:#a4abb8;
-    --line:#eaecf0;
-    --amber:#f5a524;
-
-    --oil:#c8790f;   --oil-soft:#fdf1de;
-    --dc:#2557d6;    --dc-soft:#e7edfc;
-    --waste:#2f8a5b; --waste-soft:#e6f4ec;
-    --syrup:#b8460e; --syrup-soft:#fbe9e0;
+    --brand-1:#15803d;--brand-2:#16a34a;--brand-3:#22c55e;
+    --ink-900:#0f172a;--ink-700:#334155;--ink-500:#64748b;
+    --surface:#fff;--canvas:#f1f4fa;--line:#e6e9f2;
+    --radius-lg:22px;--radius-md:12px;--radius-sm:10px;
+    --shadow-md:0 10px 28px rgba(15,23,42,.09),0 2px 6px rgba(15,23,42,.06);
+    --shadow-lg:0 18px 40px rgba(21,128,61,.22);
+    --ease:cubic-bezier(.22,1,.36,1);
   }
-  *{box-sizing:border-box;}
-  html,body{height:100%;margin:0;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);}
+  *{box-sizing:border-box}
+  html,body{height:100%}
   body{
-    background:var(--bg);color:var(--ink);
-    font-family:"Sarabun","Noto Sans Thai",-apple-system,system-ui,sans-serif;
-    display:flex;justify-content:center;padding:0 20px 56px;min-height:100%;
+    font-family:'Sarabun','Segoe UI',Tahoma,sans-serif;margin:0;color:var(--ink-900);
+    -webkit-font-smoothing:antialiased;display:flex;flex-direction:column;min-height:100vh;
+    background:
+      radial-gradient(900px 420px at 8% -8%,rgba(34,197,94,.12),transparent 55%),
+      radial-gradient(700px 360px at 100% 0%,rgba(74,222,128,.12),transparent 50%),
+      var(--canvas);
   }
-  .wrap{width:100%;max-width:720px;}
-
-  .brand{
-    display:flex;align-items:center;gap:10px;
-    padding:22px 0 32px;
+  .header{
+    color:#fff;padding:20px 32px;box-shadow:var(--shadow-lg);
+    background:linear-gradient(120deg,var(--brand-1) 0%,var(--brand-2) 65%,#0f9d58 100%);
   }
-  .brand .mark{
-    width:36px;height:36px;border-radius:8px;background:#fff;
-    display:flex;align-items:center;justify-content:center;
-    box-shadow:0 1px 2px rgba(11,18,32,.10), inset 0 0 0 1px var(--line);
-    overflow:hidden;flex-shrink:0;
+  .brandBar{display:flex;align-items:center;gap:16px}
+  .brandBar img.logo{
+    width:54px;height:54px;border-radius:var(--radius-sm);background:#fff;padding:6px;object-fit:contain;
+    box-shadow:0 4px 12px rgba(0,0,0,.18);flex-shrink:0;
   }
-  .brand .mark img{width:100%;height:100%;object-fit:contain;padding:4px;}
-  .brand span{font-size:14px;color:var(--sub);font-weight:500;}
-
-  h1{
-    font-size:clamp(28px,4.6vw,38px);
-    font-weight:700;letter-spacing:-0.015em;line-height:1.2;
-    margin:0 0 10px 0;
+  .header h1{margin:0;font-size:24px;font-weight:800;letter-spacing:.1px}
+  .fleet-sub{
+    display:inline-block;margin-top:6px;font-size:12.5px;font-weight:600;letter-spacing:.3px;
+    background:rgba(255,255,255,.18);padding:3px 12px;border-radius:999px;
   }
-  .sub{font-size:15.5px;color:var(--sub);line-height:1.6;margin:0 0 30px 0;max-width:46ch;}
-
-  .board{
-    border-radius:16px;overflow:hidden;
-    border:1px solid var(--line);
-    box-shadow:0 1px 2px rgba(11,18,32,.04);
+  main{flex:1;display:flex;flex-direction:column;justify-content:center;width:100%;max-width:1400px;margin:0 auto;padding:32px}
+  .lead{text-align:center;margin-bottom:28px}
+  .lead h2{margin:0;font-size:34px;font-weight:800}
+  .lead p{margin:6px 0 0;color:var(--ink-500);font-size:16px}
+  .tags{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+  .tag{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);
+       padding:7px 16px;border-radius:999px;font-weight:600;font-size:14px;color:var(--ink-700)}
+  .tag i{width:10px;height:10px;border-radius:50%;background:var(--brand-2);box-shadow:0 0 0 3px rgba(22,163,74,.15)}
+  .tag.b i{background:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;height:clamp(380px,56vh,560px)}
+  a.card{
+    display:flex;flex-direction:column;overflow:hidden;text-decoration:none;color:var(--ink-900);
+    background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);
+    border:1px solid #e9ecf4;transition:transform .22s var(--ease),box-shadow .22s var(--ease);
   }
-  .board-head{
-    background:var(--board);
-    background-image:linear-gradient(180deg,var(--board-2),var(--board));
-    color:#fff;
-    display:flex;align-items:center;justify-content:space-between;
-    padding:14px 22px;
-    font-size:13px;
+  a.card:hover{transform:translateY(-8px);box-shadow:0 26px 50px rgba(15,23,42,.18)}
+  a.card:active{transform:translateY(-2px)}
+  .panel{flex:1;display:flex;align-items:center;justify-content:center;position:relative;color:#fff}
+  .panel::before,.panel::after{content:'';position:absolute;border-radius:50%;background:rgba(255,255,255,.12)}
+  .panel::before{width:260px;height:260px;right:-70px;top:-90px}
+  .panel::after{width:180px;height:180px;left:-50px;bottom:-70px}
+  .panel svg{width:120px;height:120px;position:relative;z-index:1;filter:drop-shadow(0 8px 14px rgba(0,0,0,.2));
+             transition:transform .3s var(--ease)}
+  a.card:hover .panel svg{transform:scale(1.12) rotate(-4deg)}
+  .syrup .panel{background:linear-gradient(135deg,#f59e0b,#ea580c)}
+  .oil   .panel{background:linear-gradient(135deg,#15803d,#22c55e)}
+  .dc    .panel{background:linear-gradient(135deg,#1d4ed8,#38bdf8)}
+  .info{padding:24px 26px 26px;text-align:center}
+  .name{font-size:38px;font-weight:800;line-height:1.1}
+  .desc{font-size:15px;color:var(--ink-500);font-weight:500;margin-top:6px}
+  .cta{
+    display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:12px 28px;border-radius:999px;
+    font-size:16px;font-weight:700;color:#fff;transition:gap .2s var(--ease);
   }
-  .board-head .l1{color:#fff;font-weight:600;}
-  .board-head .l2{color:var(--sub-soft);}
-
-  .rows{background:var(--bg);}
-  a.row, div.row{
-    display:flex;align-items:center;gap:16px;
-    padding:19px 22px;
-    text-decoration:none;color:var(--ink);
-    border-top:1px solid var(--line);
-    transition:background-color .12s ease;
+  .syrup .cta{background:linear-gradient(135deg,#f59e0b,#ea580c)}
+  .oil .cta{background:linear-gradient(135deg,#15803d,#22c55e)}
+  .dc .cta{background:linear-gradient(135deg,#1d4ed8,#38bdf8)}
+  a.card:hover .cta{gap:14px}
+  @media (max-width:900px){
+    .grid{grid-template-columns:1fr;height:auto}
+    a.card{min-height:320px}
+    .header h1{font-size:19px}
+    .lead h2{font-size:26px}
+    main{padding:20px 16px}
   }
-  .badge{
-    width:40px;height:40px;border-radius:11px;flex-shrink:0;
-    display:flex;align-items:center;justify-content:center;font-size:18px;
-  }
-  .row.oil .badge{background:var(--oil-soft);}
-  .row.dc .badge{background:var(--dc-soft);}
-  .row.waste .badge{background:var(--waste-soft);}
-  .row.syrup .badge{background:var(--syrup-soft);}
-  .row.disabled .badge{background:#f4f5f7;}
-
-  .info{flex:1;min-width:0;}
-  .info h2{margin:0 0 2px 0;font-size:16px;font-weight:600;}
-  .info p{margin:0;font-size:13px;color:var(--sub);line-height:1.5;}
-
-  .pill{
-    flex-shrink:0;font-size:12.5px;font-weight:600;
-    padding:6px 12px;border-radius:999px;white-space:nowrap;
-  }
-  .row.oil .pill{background:var(--oil-soft);color:var(--oil);}
-  .row.dc .pill{background:var(--dc-soft);color:var(--dc);}
-  .row.waste .pill{background:var(--waste-soft);color:var(--waste);}
-  .row.syrup .pill{background:var(--syrup-soft);color:var(--syrup);}
-  .row.disabled .pill{background:#f4f5f7;color:var(--sub-soft);}
-  .row.disabled .info h2{color:var(--sub);}
-  .row.disabled{cursor:default;}
-
-  a.row.oil:hover{background:var(--oil-soft);}
-  a.row.dc:hover{background:var(--dc-soft);}
-  a.row.waste:hover{background:var(--waste-soft);}
-  a.row.syrup:hover{background:var(--syrup-soft);}
-  a.row:focus-visible{outline:2px solid var(--dc);outline-offset:-2px;}
-
-  .stat{
-    margin-top:18px;text-align:center;font-size:13px;color:var(--sub-soft);
-  }
-  .stat b{color:var(--ink);font-weight:600;}
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="brand">
-      <div class="mark"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSu93ZfbmmkcYSx_RyepMSm-k99-Z1-LZvPZa3qKx4EIA&s=10" alt="โลโก้บริษัท"></div>
-      <span>ระบบตรวจสภาพรถ &amp; เป่าแอลกอฮอล์</span>
-    </div>
-
-    <h1>เลือกสายงานที่ต้องการตรวจสภาพรถ</h1>
-    <p class="sub">ติดตามสถานะตรวจสภาพรถและผลตรวจแอลกอฮอล์ แยกตามสายขนส่งแต่ละเส้นทาง</p>
-
-    <div class="board">
-      <div class="board-head">
-        <span class="l1">สายงานขนส่ง</span>
-        <span class="l2" id="statusLabel">สถานะระบบ</span>
+  <div class="header">
+    <div class="brandBar">
+      <img class="logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSu93ZfbmmkcYSx_RyepMSm-k99-Z1-LZvPZa3qKx4EIA&s=10" alt="โลโก้บริษัท">
+      <div>
+        <h1>ติดตามสถานะตรวจสภาพรถ &amp; เป่าแอลกอฮอล์</h1>
+        <div class="fleet-sub">งาน Non Oil</div>
       </div>
-      <div class="rows" id="rows"></div>
     </div>
-
-    <div class="stat" id="stat"></div>
   </div>
 
-<script>
-  // ===== เพิ่ม/แก้สายงานตรงนี้ที่เดียว =====
-  const systems = [
-    { category:"oil",   icon:"🚛", name:"ขนส่งน้ำมันพืช",   desc:"ตรวจสภาพรถและผลตรวจแอลกอฮอล์ สายขนส่งน้ำมันพืช",
-      url:"https://script.google.com/a/macros/pt.co.th/s/AKfycbwnLrgV8x5M2LNj2yhiv7ieqlyRXXr1hS4H8v_lgRlmsHtwWkQTmmAe6grWk-APkMYRzw/exec" },
-    { category:"dc",    icon:"🏭", name:"DC วังน้อย",       desc:"ตรวจสภาพรถและผลตรวจแอลกอฮอล์ ศูนย์กระจายสินค้าวังน้อย",
-      url:"https://script.google.com/a/macros/pt.co.th/s/AKfycbx6tuTQp_03Jol-WLecVzUzGXUTGltuJDS6MgAvgK-Xf6mNFh7QrrEkX3wF47JUEZS7fA/exec" },
-    { category:"waste", icon:"♻️", name:"ขยะอุตสาหกรรม",    desc:"ตรวจสภาพรถและผลตรวจแอลกอฮอล์ สายขนส่งขยะอุตสาหกรรม", url:null },
-    { category:"syrup", icon:"🍯", name:"น้ำเชื่อม",        desc:"ตรวจสภาพรถและผลตรวจแอลกอฮอล์ สายขนส่งน้ำเชื่อม",     url:null }
-  ];
-  // ==========================================
+  <main>
+    <div class="lead">
+      <h2>เลือกฟลีตที่ต้องการดู</h2>
+      <p>คลิกที่การ์ดเพื่อเปิดหน้า Monitor ในแท็บใหม่</p>
+      <div class="tags">
+        <span class="tag"><i></i>ตรวจสภาพรถ</span>
+        <span class="tag b"><i></i>เป่าแอลกอฮอล์</span>
+      </div>
+    </div>
 
-  const rows = document.getElementById('rows');
-  systems.forEach(s => {
-    const el = document.createElement(s.url ? 'a' : 'div');
-    el.className = 'row ' + (s.url ? s.category : 'disabled');
-    if (s.url) el.href = s.url;
-    el.innerHTML = `
-      <div class="badge">${s.icon}</div>
-      <div class="info"><h2>${s.name}</h2><p>${s.desc}</p></div>
-      <div class="pill">${s.url ? 'พร้อมใช้งาน' : 'เร็วๆ นี้'}</div>
-    `;
-    rows.appendChild(el);
-  });
+    <div class="grid">
+      <a class="card syrup" target="_blank" rel="noopener" href="https://script.google.com/a/macros/pt.co.th/s/AKfycbzgyPryK0Cky_0uRbP08-zHYfeQa6KR3GguBt-jATMykilxaZHWomMdP-wuqmbwOGKAFQ/exec">
+        <div class="panel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5C12 2.5 5 10 5 15a7 7 0 0014 0c0-5-7-12.5-7-12.5z"/><path d="M9 15a3 3 0 003 3" /></svg>
+        </div>
+        <div class="info">
+          <div class="name">น้ำเชื่อม</div>
+          <div class="desc">ฟลีตขนส่งน้ำเชื่อม</div>
+          <span class="cta">เปิด Monitor <span>→</span></span>
+        </div>
+      </a>
 
-  const active = systems.filter(s => s.url).length;
-  document.getElementById('stat').innerHTML =
-    `ทั้งหมด <b>${systems.length}</b> สายงาน · พร้อมใช้งาน <b>${active}</b>`;
-</script>
+      <a class="card oil" target="_blank" rel="noopener" href="https://script.google.com/a/macros/pt.co.th/s/AKfycbwnLrgV8x5M2LNj2yhiv7ieqlyRXXr1hS4H8v_lgRlmsHtwWkQTmmAe6grWk-APkMYRzw/exec">
+        <div class="panel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v13c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-13"/><path d="M5 10c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/><path d="M5 14.5c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/></svg>
+        </div>
+        <div class="info">
+          <div class="name">น้ำมันพืช</div>
+          <div class="desc">ฟลีตขนส่งน้ำมันพืช</div>
+          <span class="cta">เปิด Monitor <span>→</span></span>
+        </div>
+      </a>
+
+      <a class="card dc" target="_blank" rel="noopener" href="https://script.google.com/a/macros/pt.co.th/s/AKfycbx6tuTQp_03Jol-WLecVzUzGXUTGltuJDS6MgAvgK-Xf6mNFh7QrrEkX3wF47JUEZS7fA/exec">
+        <div class="panel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V9l9-6 9 6v12"/><path d="M8 21v-8h8v8"/><path d="M8 15.5h8M8 18h8"/><path d="M2 21h20"/></svg>
+        </div>
+        <div class="info">
+          <div class="name">DC วังน้อย</div>
+          <div class="desc">ศูนย์กระจายสินค้า</div>
+          <span class="cta">เปิด Monitor <span>→</span></span>
+        </div>
+      </a>
+    </div>
+  </main>
 </body>
 </html>
